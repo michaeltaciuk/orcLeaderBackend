@@ -2,20 +2,55 @@
 
 const express = require('express')
 const bodyParser = require('body-parser')
-const mountRoutes = require('./routes')
+const mongoose = require('mongoose')
+const cookieParser = require('cookie-parser')
 const cors = require('cors')
 
+require('dotenv').config()
+
 const app = express()
-const port = 3001
+const port = 3001;
 
-app.use(cors())
-app.options('*', cors())
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "https://");
+//     next();
+// }); 
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+(async () => {
+    try {
+        app.use(cors());
+        app.options('*', cors());
+        app.use(cookieParser());
 
-mountRoutes(app)
+        const router = require('./routes');         
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+        app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({ extended: true }));
+        app.use('/api', router);
+
+        const mongoUser = process.env.MONGO_USER;
+        const mongoPassword = process.env.MONGO_PASSWORD;
+        
+        if (!mongoUser || !mongoPassword || !port) {
+            throw new Error('env variables are not defined');
+        }
+        await mongoose.connect(
+            `mongodb+srv://${mongoUser}:${mongoPassword}@cluster0.d2rfyb0.mongodb.net/?retryWrites=true&w=majority`,
+            {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+            }
+        );
+        console.log('Connected to MongoDB');
+
+        app.listen(port, () => {
+            console.log(`Server listening on port: ${port}`);
+        });
+
+        mongoose.connection.on('error', (err) => {
+            console.log(err);
+        });
+    } catch (err) {
+        console.log(err);
+    }
+})();
