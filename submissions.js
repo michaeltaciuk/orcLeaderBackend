@@ -12,14 +12,15 @@ const getAllUserSubmissions = async () => {
 };
 
 const getSpecificUserSubmissions = async (name) => {
-    try {
-        result =  await SubmissionModel.find({
-            name: name
-        });
-        return result;
-    } catch (e) {
-      console.log(e);
-    }
+  console.log("----------- getSpecificUserSubmissions");
+  try {
+      result =  await SubmissionModel.find({
+          name: name
+      });
+      return result;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 const createUserSubmission = async ({id, name, score}) => {

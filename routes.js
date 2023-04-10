@@ -30,8 +30,16 @@ router.post("/submit", async (req, res) => {
     res.send(result);
 });
 
-router.delete("/delete", async (req, res) => {
-    console.log("----------- router.delete delete");
+router.post("/usersubmissions", async (req, res) => {
+    console.log("----------- router.post usersubmissions");
+    const { userName } = req.params;
+    console.log(userName);
+    const result = await submissions.getSpecificUserSubmissions(userName);
+    res.send(result);
+});
+
+router.delete("/deleteuser", async (req, res) => {
+    console.log("----------- router.delete deleteuser");
     const { userName } = req.params;
     console.log(userNamel);
     await submissions.deleteUser(userName);
