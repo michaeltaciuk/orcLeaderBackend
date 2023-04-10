@@ -32,7 +32,7 @@ router.post("/submit", async (req, res) => {
 
 router.post("/usersubmissions", async (req, res) => {
     console.log("----------- router.post usersubmissions");
-    const { userName } = req.params;
+    const { userName } = req.body;
     console.log(userName);
     const result = await submissions.getSpecificUserSubmissions(userName);
     res.send(result);
@@ -40,15 +40,15 @@ router.post("/usersubmissions", async (req, res) => {
 
 router.delete("/deleteuser", async (req, res) => {
     console.log("----------- router.delete deleteuser");
-    const { userName } = req.params;
-    console.log(userNamel);
+    const { userName } = req.body;
+    console.log(userName);
     await submissions.deleteUser(userName);
     res.sendStatus(200);
 });
 
-router.get("/user", async (req, res) => {
+router.post("/user", async (req, res) => {
     console.log("----------- router.get user");
-    const { userEmail } = req.params;
+    const { userEmail } = req.body;
     console.log(userEmail);
     const result = await accounts.getSpecificUserAccount(userEmail);
     res.send(result);
