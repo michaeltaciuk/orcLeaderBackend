@@ -36,10 +36,10 @@ const createUserSubmission = async ({id, name, score}) => {
   }
 };
 
-const deleteUserSubmission = async (id) => {
+const deleteUserSubmission = async (name) => {
   try {
-    const userPromise = SubmissionModel.findOneAndDelete({id: id});
-    await Promise.all([userPromise]);
+    const result = await SubmissionModel.deleteMany({name: name});
+    console.log(result);
   } catch (e) {
     console.log(e);
   }
