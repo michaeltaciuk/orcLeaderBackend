@@ -42,7 +42,15 @@ router.delete("/deleteuser", async (req, res) => {
     console.log("----------- router.delete deleteuser");
     const { userName } = req.body;
     console.log(userName);
-    await submissions.deleteUser(userName);
+    await submissions.deleteUserSubmissions(userName);
+    res.sendStatus(200);
+});
+
+router.delete("/deletesubmission", async (req, res) => {
+    console.log("----------- router.delete deletesubmission");
+    const { submissionId } = req.body;
+    console.log(submissionId);
+    await submissions.deleteSpecificUserSubmission(submissionId);
     res.sendStatus(200);
 });
 

@@ -36,9 +36,18 @@ const createUserSubmission = async ({id, name, score}) => {
   }
 };
 
-const deleteUserSubmission = async (name) => {
+const deleteUserSubmissions = async (name) => {
   try {
     const result = await SubmissionModel.deleteMany({name: name});
+    console.log(result);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const deleteSpecificUserSubmission = async (id) => {
+  try {
+    const result = await SubmissionModel.deleteOne({_id: id});
     console.log(result);
   } catch (e) {
     console.log(e);
@@ -49,5 +58,6 @@ module.exports = {
     getAllUserSubmissions,
     getSpecificUserSubmissions,
     createUserSubmission,
-    deleteUserSubmission,
+    deleteUserSubmissions,
+    deleteSpecificUserSubmission,
 };
