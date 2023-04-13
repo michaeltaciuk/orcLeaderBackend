@@ -38,7 +38,7 @@ router.post("/usersubmissions", async (req, res) => {
     res.send(result);
 });
 
-router.delete("/deleteuser", async (req, res) => {
+router.post("/deleteuser", async (req, res) => {
     console.log("----------- router.delete deleteuser");
     const { userName } = req.body;
     console.log(userName);
@@ -46,7 +46,7 @@ router.delete("/deleteuser", async (req, res) => {
     res.sendStatus(200);
 });
 
-router.delete("/deletesubmission", async (req, res) => {
+router.post("/deletesubmission", async (req, res) => {
     console.log("----------- router.delete deletesubmission");
     const { submissionId } = req.body;
     console.log(submissionId);
@@ -65,7 +65,7 @@ router.post("/user", async (req, res) => {
 router.post("/user/create", async (req, res) => {
     console.log("----------- router.post create");
     const { userData } = req.params;
-    console.log(userDate);
+    console.log(userData);
     await accounts.createUserAccount(userData);
     res.sendStatus(200);
 });
